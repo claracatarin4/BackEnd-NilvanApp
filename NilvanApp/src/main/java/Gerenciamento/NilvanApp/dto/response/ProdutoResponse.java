@@ -1,43 +1,26 @@
-package Gerenciamento.NilvanApp.entity;
+package Gerenciamento.NilvanApp.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+public class ProdutoResponse {
 
-import java.io.File;
-import java.util.Set;
-
-@Entity
-@Table(
-        name = "produto"
-)
-public class Produto {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    @Column(name = "produto_id")
     private Integer id;
-    @Column(name = "produto_nome")
     private String nome;
 
-    @Column(name = "produto_codigo_interno")
     private String codigoInterno;
 
-    @Column(name = "produto_codigo_barras")
     private String codigoBarras;
-
-    @Column(name = "produto_descricao")
     private String descricao;
 
-    @Column(name = "produto_imagem_url")
     private String imagem;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "categoria_id", nullable = false)
-    private Categoria categoria;
+    private Integer categoriaId;
 
-    @OneToMany (mappedBy = "usuario")
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
@@ -79,4 +62,11 @@ public class Produto {
         this.imagem = imagem;
     }
 
+    public Integer getCategoriaId() {
+        return categoriaId;
+    }
+
+    public void setCategoriaId(Integer categoriaId) {
+        this.categoriaId = categoriaId;
+    }
 }
