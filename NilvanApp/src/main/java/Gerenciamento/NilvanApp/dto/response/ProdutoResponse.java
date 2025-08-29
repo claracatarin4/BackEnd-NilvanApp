@@ -1,5 +1,7 @@
 package Gerenciamento.NilvanApp.dto.response;
 
+import java.io.File;
+
 public class ProdutoResponse {
 
     private Integer id;
@@ -10,7 +12,7 @@ public class ProdutoResponse {
     private String codigoBarras;
     private String descricao;
 
-    private String imagem;
+    private File imagem;
 
     private Integer categoriaId;
 
@@ -54,11 +56,11 @@ public class ProdutoResponse {
         this.descricao = descricao;
     }
 
-    public String getImagem() {
+    public File getImagem() {
         return imagem;
     }
 
-    public void setImagem(String imagem) {
+    public void setImagem(File imagem) {
         this.imagem = imagem;
     }
 

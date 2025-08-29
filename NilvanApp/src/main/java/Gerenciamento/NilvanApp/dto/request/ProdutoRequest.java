@@ -11,7 +11,7 @@ public class ProdutoRequest {
     private String codigoBarras;
     private String descricao;
 
-    private String imagem;
+    private File imagem;
 
     private Integer categoria_id;
 

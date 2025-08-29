@@ -30,7 +30,7 @@ public class Produto {
     private String descricao;
 
     @Column(name = "produto_imagem_url")
-    private String imagem;
+    private File imagem;
 
     @JsonIgnore
     @ManyToOne
@@ -71,11 +71,11 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public String getImagem() {
+    public File getImagem() {
         return imagem;
     }
 
-    public void setImagem(String imagem) {
+    public void setImagem(File imagem) {
         this.imagem = imagem;
     }
 

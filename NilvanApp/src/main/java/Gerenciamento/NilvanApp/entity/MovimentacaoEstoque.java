@@ -20,6 +20,10 @@ public class MovimentacaoEstoque {
     @Column(name = "movimentacao_quantidade")
     private Integer quantidade;
 
+    @Column(name = "movimentacao_data_movimentacao")
+    private Integer movimentacao;
+
+
     @Column(name = "movimentacao_observacao")
     private String observacao;
 
@@ -58,6 +62,14 @@ public class MovimentacaoEstoque {
 
     public void setObservacao(String observacao) {
         this.observacao = observacao;
+    }
+
+    public Integer getMovimentacao() {
+        return movimentacao;
+    }
+
+    public void setMovimentacao(Integer movimentacao) {
+        this.movimentacao = movimentacao;
     }
 
     public Usuario getUsuario() {
