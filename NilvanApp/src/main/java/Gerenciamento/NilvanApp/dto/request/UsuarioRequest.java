@@ -10,4 +10,43 @@ public class UsuarioRequest {
     private String senha;
     private File imagem;
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public File getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(File imagem) {
+        this.imagem = imagem;
+    }
 }

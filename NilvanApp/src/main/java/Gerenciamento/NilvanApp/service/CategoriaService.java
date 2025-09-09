@@ -1,43 +1,55 @@
 package Gerenciamento.NilvanApp.service;
 
+import Gerenciamento.NilvanApp.dto.request.CategoriaDTOUpdateRequest;
 import Gerenciamento.NilvanApp.dto.request.CategoriaRequest;
-import Gerenciamento.NilvanApp.dto.request.ProdutoRequest;
+import Gerenciamento.NilvanApp.dto.response.CategoriaDTOUpdateResponse;
 import Gerenciamento.NilvanApp.dto.response.CategoriaResponse;
-import Gerenciamento.NilvanApp.dto.response.ProdutoResponse;
 import Gerenciamento.NilvanApp.entity.Categoria;
-import Gerenciamento.NilvanApp.entity.Estoque;
-import Gerenciamento.NilvanApp.entity.Produto;
 import Gerenciamento.NilvanApp.repository.CategoriaRepository;
-import Gerenciamento.NilvanApp.repository.EstoqueRepository;
-import Gerenciamento.NilvanApp.repository.ProdutoRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class CategoriaService {
-
-    @Autowired
-    private ModelMapper modelMapper;
-
     private CategoriaRepository categoriaRepository;
 
-    public CategoriaService
-            (CategoriaRepository categoriaRepository) {
+    private ModelMapper modelMapper;
+    public CategoriaService(CategoriaRepository categoriaRepository, ModelMapper modelMapper) {
         this.categoriaRepository = categoriaRepository;
+        this.modelMapper = modelMapper;
     }
-
-    public List<Categoria> listarCategoria() {
-        return this.categoriaRepository.findAll();
-    }
-
     public CategoriaResponse criarCategoria(CategoriaRequest categoriaRequest){
-
-        Categoria categoria = modelMapper.map(categoriaRequest,Categoria.class);
-        Categoria categoria1= this.categoriaRepository.save(categoria);
-        CategoriaResponse categoriaResponse = modelMapper.map(categoria1,CategoriaResponse.class);
+        Categoria categoria = this.modelMapper.map(categoriaRequest,Categoria.class);
+        Categoria categoriaSalva = this.categoriaRepository.save(categoria);
+        CategoriaResponse categoriaResponse = this.modelMapper.map(categoriaSalva,CategoriaResponse.class);
         return categoriaResponse;
     }
+    public List<Categoria> listarCategorias(){
+        return this.categoriaRepository.listarCategoria();
+    }
+
+    public CategoriaResponse retornarCategoria (Integer id){
+        return  modelMapper.map(this.categoriaRepository.obterCategoriaPorId(id),CategoriaResponse.class);
+    }
+
+    public CategoriaResponse atualizarCategoria(Integer categoriaId, CategoriaRequest request){
+        Categoria categoria = this.categoriaRepository.obterCategoriaPorId(categoriaId);
+        if (categoria != null){
+            modelMapper.map(request,categoria);
+            Categoria categoriaSalvo = this.categoriaRepository.save(categoria);
+            return modelMapper.map(categoriaSalvo,CategoriaResponse.class);
+        }else{
+            throw new IllegalArgumentException("Categoria não existe");
+        }
+    }
+
+
+    public void apagarCategoria(Integer categoriaId){
+        this.categoriaRepository.apagarCategoria(categoriaId);
+    }
+
+
+
 }
