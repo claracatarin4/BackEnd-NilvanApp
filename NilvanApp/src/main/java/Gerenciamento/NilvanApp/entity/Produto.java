@@ -17,6 +17,7 @@ public class Produto {
 
     @Column(name = "produto_id")
     private Integer id;
+
     @Column(name = "produto_nome")
     private String nome;
 
@@ -29,8 +30,12 @@ public class Produto {
     @Column(name = "produto_descricao")
     private String descricao;
 
-    @Column(name = "produto_imagem_url")
+    @Column(name = "produto_imagem")
     private File imagem;
+
+    @Column(name = "produto_status")
+    private Integer status;
+
 
     @JsonIgnore
     @ManyToOne
@@ -38,6 +43,14 @@ public class Produto {
     private Categoria categoria;
 
     @OneToMany (mappedBy = "usuario")
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
@@ -77,6 +90,22 @@ public class Produto {
 
     public void setImagem(File imagem) {
         this.imagem = imagem;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
 }

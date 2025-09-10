@@ -27,6 +27,10 @@ public class MovimentacaoEstoque {
     @Column(name = "movimentacao_observacao")
     private String observacao;
 
+    @Column(name = "movimentacao_status")
+    private Integer status;
+
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
@@ -39,6 +43,14 @@ public class MovimentacaoEstoque {
 
 
     @OneToMany (mappedBy = "movimentacao_estoque")
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getTipo() {
         return tipo;
@@ -86,5 +98,13 @@ public class MovimentacaoEstoque {
 
     public void setEstoque(Estoque estoque) {
         this.estoque = estoque;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

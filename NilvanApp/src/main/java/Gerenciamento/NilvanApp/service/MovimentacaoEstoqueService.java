@@ -31,7 +31,16 @@ public class MovimentacaoEstoqueService {
     public List<MovimentacaoEstoque> listarMovimentacaoEstoque() {
         return this.movimentacaoEstoqueRepository.findAll();
     }
-
+    public MovimentacaoEstoqueResponse atualizarMovimentacaoEstoque(Integer movimentacaoEstoqueId, MovimentacaoEstoqueRequest request){
+        MovimentacaoEstoque movimentacaoEstoque = this.estoqueRepository.obterMovimentacaoEstoquePorId(movimentacaoEstoqueId);
+        if (movimentacaoEstoqueId != null){
+            modelMapper.map(request,estoque);
+            MovimentacaoEstoque movimentacaoestoqueSalvo = this.estoqueRepository.save(movimentacaoEstoque);
+            return modelMapper.map(movimentacaoestoqueSalvo,MovimentacaoEstoqueResponse.class);
+        }else{
+            throw new IllegalArgumentException("Movimentaçãpo Estoque não existe");
+        }
+    }
     public MovimentacaoEstoqueResponse criarMovimentacaoEstoque(MovimentacaoEstoqueRequest movimentacaoEstoqueRequest){
 
         MovimentacaoEstoque movimentacaoEstoque = modelMapper.map(movimentacaoEstoqueRequest,MovimentacaoEstoque.class);

@@ -6,15 +6,20 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "categoria")
 public class Categoria {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "categoria_id")
+
     private Integer id;
     @Column(name = "categoria_nome")
     private String nome;
 
     @Column(name = "categoria_descricao")
     private String descricao;
+
+    @Column(name = "categoria_status")
+    private Integer status;
 
     @OneToMany (mappedBy = "categoria")
 
@@ -40,5 +45,13 @@ public class Categoria {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

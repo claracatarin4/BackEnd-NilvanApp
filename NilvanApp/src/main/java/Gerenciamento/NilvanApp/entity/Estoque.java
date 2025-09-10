@@ -22,13 +22,22 @@ public class Estoque {
     @Column(name = "estoque_atualizado_em")
     private Date atualizado;
 
-    @Column(name = "estoque_estoquecol")
-    private String estoqueCol;
-
     @Column(name = "estoque_preco_custo")
     private Date precoCusto;
 
+    @Column(name = "estoque_status")
+    private Integer status;
+
+
     @OneToMany (mappedBy = "estoque")
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getQntdAtual() {
         return qntdAtual;
@@ -54,19 +63,19 @@ public class Estoque {
         this.atualizado = atualizado;
     }
 
-    public String getEstoqueCol() {
-        return estoqueCol;
-    }
-
-    public void setEstoqueCol(String estoqueCol) {
-        this.estoqueCol = estoqueCol;
-    }
-
     public Date getPrecoCusto() {
         return precoCusto;
     }
 
     public void setPrecoCusto(Date precoCusto) {
         this.precoCusto = precoCusto;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

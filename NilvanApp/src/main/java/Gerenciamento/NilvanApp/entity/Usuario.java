@@ -27,10 +27,19 @@ public class Usuario {
     @Column(name = "usuario_senha")
     private String senha;
 
-    @Column(name = "usuario_imagem_url")
-    private String imagemUrl;
+    @Column(name = "usuario_imagem")
+    private String imagem;
+
 
     @OneToMany (mappedBy = "usuario")
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
@@ -64,12 +73,12 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public String getImagemUrl() {
-        return imagemUrl;
+    public String getImagem() {
+        return imagem;
     }
 
-    public void setImagemUrl(String imagemUrl) {
-        this.imagemUrl = imagemUrl;
+    public void setImagem(String imagem) {
+        this.imagemUrl = imagem;
     }
 }
 
