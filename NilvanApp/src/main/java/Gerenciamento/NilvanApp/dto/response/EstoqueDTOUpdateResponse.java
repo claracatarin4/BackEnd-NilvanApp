@@ -1,5 +1,7 @@
 package Gerenciamento.NilvanApp.dto.response;
 
+import java.util.Date;
+
 public class EstoqueDTOUpdateResponse {
 
     private Integer id;

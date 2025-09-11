@@ -4,6 +4,8 @@ package Gerenciamento.NilvanApp.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.io.File;
+
 @Entity
 @Table(
         name = "usuario"
@@ -28,7 +30,10 @@ public class Usuario {
     private String senha;
 
     @Column(name = "usuario_imagem")
-    private String imagem;
+    private File imagem;
+
+    @Column(name = "usuario_status")
+    private Integer status;
 
 
     @OneToMany (mappedBy = "usuario")
@@ -73,12 +78,20 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public String getImagem() {
+    public File getImagem() {
         return imagem;
     }
 
-    public void setImagem(String imagem) {
-        this.imagemUrl = imagem;
+    public void setImagem(File imagem) {
+        this.imagem = imagem;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }
 

@@ -1,5 +1,7 @@
 package Gerenciamento.NilvanApp.dto.response;
 
+import java.io.File;
+
 public class ProdutoDTOUpdateResponse {
 
     private Integer id;

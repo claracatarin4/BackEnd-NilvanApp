@@ -5,7 +5,6 @@ public class VariacaoProdutoDTOUpdateResponse {
     private Integer status;
     private String nome;
     private String descricao;
-    private Integer status;
     private Integer produto;
     private Integer estoque;
 
@@ -48,4 +47,6 @@ public class VariacaoProdutoDTOUpdateResponse {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+
 }

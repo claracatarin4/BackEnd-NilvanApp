@@ -1,8 +1,11 @@
 package Gerenciamento.NilvanApp.service;
 
 import Gerenciamento.NilvanApp.controller.ProdutoController;
+import Gerenciamento.NilvanApp.dto.request.CategoriaRequest;
 import Gerenciamento.NilvanApp.dto.request.ProdutoRequest;
+import Gerenciamento.NilvanApp.dto.response.CategoriaResponse;
 import Gerenciamento.NilvanApp.dto.response.ProdutoResponse;
+import Gerenciamento.NilvanApp.entity.Categoria;
 import Gerenciamento.NilvanApp.entity.Produto;
 import Gerenciamento.NilvanApp.repository.ProdutoRepository;
 import org.modelmapper.ModelMapper;
@@ -35,5 +38,28 @@ public class ProdutoService {
         Produto produtoSave= this.produtoRepository.save(produto);
         ProdutoResponse produtoResponse = modelMapper.map(produtoSave,ProdutoResponse.class);
         return produtoResponse;
+
     }
+
+    public ProdutoResponse retornarProduto(Integer id){
+        return  modelMapper.map(this.produtoRepository.obterProdutoPorId(id),ProdutoResponse.class);
+    }
+
+    public ProdutoResponse atualizarProduto(Integer produtoId, CategoriaRequest request){
+        Produto produto = this.produtoRepository.obterProdutoPorId(produtoId);
+        if (produto != null){
+            modelMapper.map(request,produto);
+            Produto produtoSalvo = this.produtoRepository.save(produto);
+            return modelMapper.map(produtoSalvo,ProdutoResponse.class);
+        }else{
+            throw new IllegalArgumentException("Produto não existe");
+        }
+    }
+
+
+    public void apagarProduto(Integer produtoId){
+        this.produtoRepository.apagarProduto(produtoId);
+    }
+
+
 }
