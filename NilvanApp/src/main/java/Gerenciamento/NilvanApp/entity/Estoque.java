@@ -28,8 +28,9 @@ public class Estoque {
     @Column(name = "estoque_status")
     private Integer status;
 
-
-    @OneToMany (mappedBy = "estoque")
+    @ManyToOne
+    @JoinColumn(name = "variacao_id")
+    private VariacaoProduto variacao;
 
     public Integer getId() {
         return id;
@@ -77,5 +78,13 @@ public class Estoque {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public VariacaoProduto getVariacao() {
+        return variacao;
+    }
+
+    public void setVariacao(VariacaoProduto variacao) {
+        this.variacao = variacao;
     }
 }

@@ -6,6 +6,7 @@ public class CategoriaResponse {
     private String nome;
     private String descricao;
 
+    private Integer status;
     public Integer getId() {
         return id;
     }
@@ -28,6 +29,14 @@ public class CategoriaResponse {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }
 

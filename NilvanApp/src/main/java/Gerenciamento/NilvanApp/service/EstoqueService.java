@@ -3,7 +3,9 @@ package Gerenciamento.NilvanApp.service;
 import Gerenciamento.NilvanApp.dto.request.EstoqueRequest;
 import Gerenciamento.NilvanApp.dto.response.EstoqueResponse;
 import Gerenciamento.NilvanApp.entity.Estoque;
+import Gerenciamento.NilvanApp.entity.VariacaoProduto;
 import Gerenciamento.NilvanApp.repository.EstoqueRepository;
+import Gerenciamento.NilvanApp.repository.VariacaoProdutoRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +17,19 @@ import java.util.stream.Collectors;
 public class EstoqueService {
 
     private final EstoqueRepository estoqueRepository;
+    private VariacaoProdutoRepository variacaoProdutoRepository;
     private final ModelMapper modelMapper;
 
-    public EstoqueService(EstoqueRepository estoqueRepository, ModelMapper modelMapper) {
+    public EstoqueService(EstoqueRepository estoqueRepository, VariacaoProdutoRepository variacaoProdutoRepository, ModelMapper modelMapper) {
         this.estoqueRepository = estoqueRepository;
+        this.variacaoProdutoRepository = variacaoProdutoRepository;
         this.modelMapper = modelMapper;
     }
 
     public EstoqueResponse criarEstoque(EstoqueRequest estoqueRequest) {
+        VariacaoProduto variacaoProduto = variacaoProdutoRepository.obterVariacaoProdutoPorId(estoqueRequest.getVariacaoId());
         Estoque estoque = this.modelMapper.map(estoqueRequest, Estoque.class);
+        estoque.setVariacao(variacaoProduto);
         Estoque estoqueSalvo = this.estoqueRepository.save(estoque);
         return this.modelMapper.map(estoqueSalvo, EstoqueResponse.class);
     }
