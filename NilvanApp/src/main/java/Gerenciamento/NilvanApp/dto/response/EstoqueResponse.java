@@ -8,9 +8,11 @@ public class EstoqueResponse {
     private Integer qntdAtual;
     private Integer qntdMinima;
     private Date atualizado;
-    private String estoqueCol;
     private Float precoCusto;
     private Float precoVenda;
+
+    private VariacaoProdutoResponse variacaoProdutoResponse;
+
 
     public Integer getId() {
         return id;
@@ -44,14 +46,6 @@ public class EstoqueResponse {
         this.atualizado = atualizado;
     }
 
-    public String getEstoqueCol() {
-        return estoqueCol;
-    }
-
-    public void setEstoqueCol(String estoqueCol) {
-        this.estoqueCol = estoqueCol;
-    }
-
     public Float getPrecoCusto() {
         return precoCusto;
     }
@@ -67,4 +61,14 @@ public class EstoqueResponse {
     public void setPrecoVenda(Float precoVenda) {
         this.precoVenda = precoVenda;
     }
+
+    public VariacaoProdutoResponse getVariacaoProdutoResponse() {
+        return variacaoProdutoResponse;
+    }
+
+    public void setVariacaoProdutoResponse(VariacaoProdutoResponse variacaoProdutoResponse) {
+        this.variacaoProdutoResponse = variacaoProdutoResponse;
+    }
+
+
 }

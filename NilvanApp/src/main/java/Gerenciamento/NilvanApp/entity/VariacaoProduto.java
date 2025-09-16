@@ -3,6 +3,8 @@ package Gerenciamento.NilvanApp.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "variacao")
 
@@ -28,9 +30,8 @@ public class VariacaoProduto {
     private Produto produto;
 
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "estoque_id", nullable = false)
-    private Estoque estoque;
+    @OneToMany(mappedBy = "variacao")
+    private List<Estoque>estoque;
 
     public Integer getId() {
         return id;
@@ -72,11 +73,11 @@ public class VariacaoProduto {
         this.produto = produto;
     }
 
-    public Estoque getEstoque() {
+    public List<Estoque> getEstoque() {
         return estoque;
     }
 
-    public void setEstoque(Estoque estoque) {
+    public void setEstoque(List<Estoque> estoque) {
         this.estoque = estoque;
     }
 }
