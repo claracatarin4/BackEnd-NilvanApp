@@ -27,8 +27,12 @@ public class VariacaoProdutoService {
 
     private VariacaoProdutoRepository variacaoProdutoRepository;
 
-    public VariacaoProdutoService(VariacaoProdutoRepository variacaoProdutoRepository) {
+    private  ProdutoRepository produtoRepository;
+
+    public VariacaoProdutoService(VariacaoProdutoRepository variacaoProdutoRepository , ProdutoRepository produtoRepository) {
+
         this.variacaoProdutoRepository = variacaoProdutoRepository;
+        this.produtoRepository = produtoRepository;
     }
 
     public List<VariacaoProduto> listarVariacoes() {
@@ -38,7 +42,11 @@ public class VariacaoProdutoService {
 
     public VariacaoProdutoResponse criarVariacao(VariacaoProdutoRequest variacaoProdutoRequest) {
 
-        VariacaoProduto variacaoProduto = modelMapper.map(variacaoProdutoRequest, VariacaoProduto.class);
+        VariacaoProduto variacaoProduto = new VariacaoProduto();
+        variacaoProduto.setNome(variacaoProdutoRequest.getNome());
+        variacaoProduto.setDescricao(variacaoProdutoRequest.getDescricao());
+        variacaoProduto.setProduto(produtoRepository.obterProdutoPorId(variacaoProdutoRequest.getProduto_id()));
+
         VariacaoProduto variacaoProdutoSalvo = this.variacaoProdutoRepository.save(variacaoProduto);
         VariacaoProdutoResponse variacaoProdutoResponse = modelMapper.map(variacaoProdutoSalvo, VariacaoProdutoResponse.class);
         return variacaoProdutoResponse;

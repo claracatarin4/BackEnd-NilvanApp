@@ -13,7 +13,10 @@ public class ProdutoRequest {
 
     private File imagem;
 
+    private Integer status;
+
     private Integer categoria_id;
+
 
     public String getNome() {
         return nome;
@@ -53,6 +56,14 @@ public class ProdutoRequest {
 
     public void setImagem(File imagem) {
         this.imagem = imagem;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Integer getCategoria_id() {

@@ -3,8 +3,8 @@ package Gerenciamento.NilvanApp.dto.request;
 public class CategoriaRequest {
     private String nome;
     private String descricao;
-
     private Integer status;
+
     public String getNome() {
         return nome;
     }
@@ -28,4 +28,6 @@ public class CategoriaRequest {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+
 }

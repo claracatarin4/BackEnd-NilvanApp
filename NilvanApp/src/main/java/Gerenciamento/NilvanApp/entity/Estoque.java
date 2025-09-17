@@ -8,26 +8,22 @@ import java.util.Date;
 @Entity
 @Table(name = "estoque")
 public class Estoque {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "estoque_id")
     private Integer id;
     @Column(name = "estoque_quantidade_atual")
     private Integer qntdAtual;
-
     @Column(name = "estoque_quantidade_minima")
     private Integer qntdMinima;
-
     @Column(name = "estoque_atualizado_em")
     private Date atualizado;
-
+    @Column(name = "estoque_preco_venda")
+    private Float precoVenda;
     @Column(name = "estoque_preco_custo")
-    private Date precoCusto;
-
+    private Float precoCusto;
     @Column(name = "estoque_status")
     private Integer status;
-
     @ManyToOne
     @JoinColumn(name = "variacao_id")
     private VariacaoProduto variacao;
@@ -64,11 +60,19 @@ public class Estoque {
         this.atualizado = atualizado;
     }
 
-    public Date getPrecoCusto() {
+    public Float getPrecoVenda() {
+        return precoVenda;
+    }
+
+    public void setPrecoVenda(Float precoVenda) {
+        this.precoVenda = precoVenda;
+    }
+
+    public Float getPrecoCusto() {
         return precoCusto;
     }
 
-    public void setPrecoCusto(Date precoCusto) {
+    public void setPrecoCusto(Float precoCusto) {
         this.precoCusto = precoCusto;
     }
 

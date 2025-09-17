@@ -5,6 +5,7 @@ private Integer id;
     private String nome;
     private String descricao;
     private Integer produto_id;
+    private  Integer status;
 
     public Integer getId() {
         return id;
@@ -36,5 +37,13 @@ private Integer id;
 
     public void setProduto_id(Integer produto_id) {
         this.produto_id = produto_id;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

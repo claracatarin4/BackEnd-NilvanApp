@@ -8,6 +8,7 @@ public class EstoqueRequest {
     private Date atualizado;
     private Float precoCusto;
     private Float precoVenda;
+    private  Integer status;
     private Integer variacaoId;
 
     public Integer getQntdAtual() {
@@ -56,5 +57,13 @@ public class EstoqueRequest {
 
     public void setVariacaoId(Integer variacaoId) {
         this.variacaoId = variacaoId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

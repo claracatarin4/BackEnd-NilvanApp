@@ -27,9 +27,14 @@ public class EstoqueService {
     }
 
     public EstoqueResponse criarEstoque(EstoqueRequest estoqueRequest) {
-        VariacaoProduto variacaoProduto = variacaoProdutoRepository.obterVariacaoProdutoPorId(estoqueRequest.getVariacaoId());
-        Estoque estoque = this.modelMapper.map(estoqueRequest, Estoque.class);
-        estoque.setVariacao(variacaoProduto);
+        Estoque estoque = new Estoque();
+        estoque.setQntdAtual(estoqueRequest.getQntdAtual());
+        estoque.setQntdMinima(estoqueRequest.getQntdMinima());
+        estoque.setAtualizado(estoqueRequest.getAtualizado());
+        estoque.setPrecoVenda(estoqueRequest.getPrecoVenda());
+        estoque.setPrecoCusto(estoqueRequest.getPrecoCusto());
+        estoque.setStatus(estoqueRequest.getStatus());
+        estoque.setVariacao(variacaoProdutoRepository.obterVariacaoProdutoPorId(estoqueRequest.getVariacaoId()));
         Estoque estoqueSalvo = this.estoqueRepository.save(estoque);
         return this.modelMapper.map(estoqueSalvo, EstoqueResponse.class);
     }
