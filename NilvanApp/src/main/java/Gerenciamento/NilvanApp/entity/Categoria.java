@@ -3,6 +3,8 @@ package Gerenciamento.NilvanApp.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "categoria")
 public class Categoria {
@@ -17,11 +19,10 @@ public class Categoria {
 
     @Column(name = "categoria_descricao")
     private String descricao;
-
     @Column(name = "categoria_status")
     private Integer status;
-
     @OneToMany (mappedBy = "categoria")
+    List<Produto> produtos;
 
     public String getNome() {
         return nome;
@@ -53,5 +54,13 @@ public class Categoria {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
     }
 }

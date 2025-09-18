@@ -1,12 +1,11 @@
 package Gerenciamento.NilvanApp.dto.request;
 
-import java.io.File;
 import java.util.Date;
 
 public class MovimentacaoEstoqueRequest {
     private String tipo;
     private Integer quantidade;
-    private Date movimentacao;
+    private Date dataMovimentacao;
     private String observacao;
     private Integer usuario_id;
     private Integer estoque_id;
@@ -27,12 +26,12 @@ public class MovimentacaoEstoqueRequest {
         this.quantidade = quantidade;
     }
 
-    public Date getMovimentacao() {
-        return movimentacao;
+    public Date getDataMovimentacao() {
+        return dataMovimentacao;
     }
 
-    public void setMovimentacao(Date movimentacao) {
-        this.movimentacao = movimentacao;
+    public void setDataMovimentacao(Date dataMovimentacao) {
+        this.dataMovimentacao = dataMovimentacao;
     }
 
     public String getObservacao() {

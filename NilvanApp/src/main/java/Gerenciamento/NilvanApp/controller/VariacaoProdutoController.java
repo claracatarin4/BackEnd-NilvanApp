@@ -1,11 +1,9 @@
 package Gerenciamento.NilvanApp.controller;
 
 
-import Gerenciamento.NilvanApp.dto.request.CategoriaRequest;
 import Gerenciamento.NilvanApp.dto.request.VariacaoProdutoRequest;
-import Gerenciamento.NilvanApp.dto.response.CategoriaResponse;
 import Gerenciamento.NilvanApp.dto.response.VariacaoProdutoResponse;
-import Gerenciamento.NilvanApp.entity.VariacaoProduto;
+import Gerenciamento.NilvanApp.entity.Variacao;
 import Gerenciamento.NilvanApp.service.VariacaoProdutoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -26,7 +24,7 @@ public class VariacaoProdutoController {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<VariacaoProduto>> listarVariacoes() {
+    public ResponseEntity<List<Variacao>> listarVariacoes() {
         return ResponseEntity.ok(variacaoProdutoService.listarVariacoes());
     }
 

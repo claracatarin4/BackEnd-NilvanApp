@@ -3,6 +3,8 @@ package Gerenciamento.NilvanApp.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
 @Table(
         name = "movimentacao_estoque"
@@ -21,7 +23,7 @@ public class MovimentacaoEstoque {
     private Integer quantidade;
 
     @Column(name = "movimentacao_data_movimentacao")
-    private Integer movimentacao;
+    private Date dataMovimentacao;
 
 
     @Column(name = "movimentacao_observacao")
@@ -29,7 +31,6 @@ public class MovimentacaoEstoque {
 
     @Column(name = "movimentacao_status")
     private Integer status;
-
 
     @JsonIgnore
     @ManyToOne
@@ -68,6 +69,14 @@ public class MovimentacaoEstoque {
         this.quantidade = quantidade;
     }
 
+    public Date getDataMovimentacao() {
+        return dataMovimentacao;
+    }
+
+    public void setDataMovimentacao(Date dataMovimentacao) {
+        this.dataMovimentacao = dataMovimentacao;
+    }
+
     public String getObservacao() {
         return observacao;
     }
@@ -76,12 +85,12 @@ public class MovimentacaoEstoque {
         this.observacao = observacao;
     }
 
-    public Integer getMovimentacao() {
-        return movimentacao;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setMovimentacao(Integer movimentacao) {
-        this.movimentacao = movimentacao;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Usuario getUsuario() {
@@ -98,13 +107,5 @@ public class MovimentacaoEstoque {
 
     public void setEstoque(Estoque estoque) {
         this.estoque = estoque;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
     }
 }

@@ -8,7 +8,9 @@ public class UsuarioRequest {
     private String cargo;
     private String email;
     private String senha;
-    private File imagem;
+    private byte[] imagem;
+
+    private Integer status;
 
     public String getNome() {
         return nome;
@@ -42,11 +44,19 @@ public class UsuarioRequest {
         this.senha = senha;
     }
 
-    public File getImagem() {
+    public byte[] getImagem() {
         return imagem;
     }
 
-    public void setImagem(File imagem) {
+    public void setImagem(byte[] imagem) {
         this.imagem = imagem;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

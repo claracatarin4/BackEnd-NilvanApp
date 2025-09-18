@@ -10,7 +10,6 @@ public class EstoqueResponse {
     private Date atualizado;
     private Float precoCusto;
     private Float precoVenda;
-
     private VariacaoProdutoResponse variacaoProdutoResponse;
 
 

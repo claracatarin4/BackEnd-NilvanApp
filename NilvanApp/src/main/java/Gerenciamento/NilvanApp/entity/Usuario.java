@@ -26,11 +26,11 @@ public class Usuario {
     @Column(name = "usuario_email")
     private String email;
 
-    @Column(name = "usuario_senha")
+    @Column(name = "usuario_senha_hash")
     private String senha;
 
     @Column(name = "usuario_imagem")
-    private File imagem;
+    private byte[] imagem;
 
     @Column(name = "usuario_status")
     private Integer status;
@@ -78,11 +78,11 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public File getImagem() {
+    public byte[] getImagem() {
         return imagem;
     }
 
-    public void setImagem(File imagem) {
+    public void setImagem(byte[] imagem) {
         this.imagem = imagem;
     }
 

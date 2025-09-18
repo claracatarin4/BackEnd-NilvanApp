@@ -14,7 +14,7 @@ public class ProdutoResponse {
 
     private File imagem;
 
-    private Integer categoriaId;
+    private CategoriaResponse categoriaResponse;
 
     public Integer getId() {
         return id;
@@ -64,11 +64,11 @@ public class ProdutoResponse {
         this.imagem = imagem;
     }
 
-    public Integer getCategoriaId() {
-        return categoriaId;
+    public CategoriaResponse getCategoriaResponse() {
+        return categoriaResponse;
     }
 
-    public void setCategoriaId(Integer categoriaId) {
-        this.categoriaId = categoriaId;
+    public void setCategoriaResponse(CategoriaResponse categoriaResponse) {
+        this.categoriaResponse = categoriaResponse;
     }
 }

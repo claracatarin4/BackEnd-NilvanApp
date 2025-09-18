@@ -1,13 +1,9 @@
 package Gerenciamento.NilvanApp.service;
 
-import Gerenciamento.NilvanApp.controller.ProdutoController;
-import Gerenciamento.NilvanApp.dto.request.CategoriaRequest;
 import Gerenciamento.NilvanApp.dto.request.ProdutoRequest;
 import Gerenciamento.NilvanApp.dto.response.CategoriaResponse;
 import Gerenciamento.NilvanApp.dto.response.ProdutoResponse;
-import Gerenciamento.NilvanApp.entity.Categoria;
 import Gerenciamento.NilvanApp.entity.Produto;
-import Gerenciamento.NilvanApp.entity.VariacaoProduto;
 import Gerenciamento.NilvanApp.repository.CategoriaRepository;
 import Gerenciamento.NilvanApp.repository.ProdutoRepository;
 import org.modelmapper.ModelMapper;
@@ -21,8 +17,8 @@ public class ProdutoService {
 
     @Autowired
     private ModelMapper modelMapper;
-    private ProdutoRepository produtoRepository;
-    private CategoriaRepository categoriaRepository;
+    private final ProdutoRepository produtoRepository;
+    private final CategoriaRepository categoriaRepository;
 
     public ProdutoService(ProdutoRepository produtoRepository, CategoriaRepository categoriaRepository, ModelMapper modelMapper) {
 
@@ -47,7 +43,17 @@ public class ProdutoService {
         produto.setImagem(produtoRequest.getImagem());
         produto.setStatus(produtoRequest.getStatus());
         Produto produtoSave= this.produtoRepository.save(produto);
-        ProdutoResponse produtoResponse = modelMapper.map(produtoSave,ProdutoResponse.class);
+
+        ProdutoResponse produtoResponse = new ProdutoResponse();
+
+        produtoResponse.setNome(produtoSave.getNome());
+        produtoResponse.setId(produtoSave.getId());
+        produtoResponse.setDescricao(produtoSave.getDescricao());
+        produtoResponse.setImagem(produtoSave.getImagem());
+        produtoResponse.setCategoriaResponse(modelMapper.map(produtoSave.getCategoria(), CategoriaResponse.class));
+        produtoResponse.setCodigoBarras(produtoSave.getCodigoBarras());
+        produtoSave.setCodigoInterno(produtoSave.getCodigoInterno());
+
         return produtoResponse;
 
     }
