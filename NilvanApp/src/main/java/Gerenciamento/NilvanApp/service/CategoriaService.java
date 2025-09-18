@@ -16,6 +16,7 @@ public class CategoriaService {
     private CategoriaRepository categoriaRepository;
 
     private ModelMapper modelMapper;
+
     public CategoriaService(CategoriaRepository categoriaRepository, ModelMapper modelMapper) {
         this.categoriaRepository = categoriaRepository;
         this.modelMapper = modelMapper;

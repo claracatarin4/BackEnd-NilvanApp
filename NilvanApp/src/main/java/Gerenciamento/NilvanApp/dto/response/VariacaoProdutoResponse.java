@@ -4,7 +4,7 @@ public class VariacaoProdutoResponse {
 private Integer id;
     private String nome;
     private String descricao;
-    private Integer produto_id;
+    private ProdutoResponse produtoResponse;
     private  Integer status;
 
     public Integer getId() {
@@ -31,12 +31,12 @@ private Integer id;
         this.descricao = descricao;
     }
 
-    public Integer getProduto_id() {
-        return produto_id;
+    public ProdutoResponse getProdutoResponse() {
+        return produtoResponse;
     }
 
-    public void setProduto_id(Integer produto_id) {
-        this.produto_id = produto_id;
+    public void setProdutoResponse(ProdutoResponse produtoResponse) {
+        this.produtoResponse = produtoResponse;
     }
 
     public Integer getStatus() {

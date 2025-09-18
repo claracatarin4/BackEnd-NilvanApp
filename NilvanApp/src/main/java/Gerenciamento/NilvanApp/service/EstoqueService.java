@@ -2,8 +2,8 @@ package Gerenciamento.NilvanApp.service;
 
 import Gerenciamento.NilvanApp.dto.request.EstoqueRequest;
 import Gerenciamento.NilvanApp.dto.response.EstoqueResponse;
+import Gerenciamento.NilvanApp.dto.response.VariacaoProdutoResponse;
 import Gerenciamento.NilvanApp.entity.Estoque;
-import Gerenciamento.NilvanApp.entity.VariacaoProduto;
 import Gerenciamento.NilvanApp.repository.EstoqueRepository;
 import Gerenciamento.NilvanApp.repository.VariacaoProdutoRepository;
 import org.modelmapper.ModelMapper;
@@ -34,9 +34,21 @@ public class EstoqueService {
         estoque.setPrecoVenda(estoqueRequest.getPrecoVenda());
         estoque.setPrecoCusto(estoqueRequest.getPrecoCusto());
         estoque.setStatus(estoqueRequest.getStatus());
-        estoque.setVariacao(variacaoProdutoRepository.obterVariacaoProdutoPorId(estoqueRequest.getVariacaoId()));
+        estoque.setVariacaoProduto(variacaoProdutoRepository.obterVariacaoProdutoPorId(estoqueRequest.getVariacaoId()));
         Estoque estoqueSalvo = this.estoqueRepository.save(estoque);
-        return this.modelMapper.map(estoqueSalvo, EstoqueResponse.class);
+
+        EstoqueResponse estoqueResponse = new EstoqueResponse();
+
+        estoqueResponse.setQntdAtual(estoqueSalvo.getQntdAtual());
+        estoqueResponse.setId(estoqueSalvo.getId());
+        estoqueResponse.setQntdMinima(estoqueSalvo.getQntdMinima());
+        estoqueResponse.setAtualizado(estoqueSalvo.getAtualizado());
+        estoqueResponse.setPrecoVenda(estoqueSalvo.getPrecoVenda());
+        estoqueResponse.setPrecoCusto(estoqueSalvo.getPrecoCusto());
+        estoqueResponse.setVariacaoProdutoResponse(modelMapper.map(estoqueSalvo.getVariacaoProduto(), VariacaoProdutoResponse.class));
+
+        return estoqueResponse;
+
     }
 
     public List<EstoqueResponse> listarEstoques() {

@@ -10,6 +10,8 @@ public class UsuarioRequest {
     private String senha;
     private File imagem;
 
+    private Integer status;
+
     public String getNome() {
         return nome;
     }
@@ -48,5 +50,13 @@ public class UsuarioRequest {
 
     public void setImagem(File imagem) {
         this.imagem = imagem;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

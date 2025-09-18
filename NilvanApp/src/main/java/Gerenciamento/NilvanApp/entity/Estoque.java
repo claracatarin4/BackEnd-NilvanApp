@@ -1,6 +1,7 @@
 package Gerenciamento.NilvanApp.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -24,9 +25,12 @@ public class Estoque {
     private Float precoCusto;
     @Column(name = "estoque_status")
     private Integer status;
+
     @ManyToOne
-    @JoinColumn(name = "variacao_id")
-    private VariacaoProduto variacao;
+    @JoinColumn(name = "variacao_id", nullable = false)
+    @JsonIgnore
+    private Variacao variacao;
+
 
     public Integer getId() {
         return id;
@@ -84,11 +88,11 @@ public class Estoque {
         this.status = status;
     }
 
-    public VariacaoProduto getVariacao() {
+    public Variacao getVariacaoProduto() {
         return variacao;
     }
 
-    public void setVariacao(VariacaoProduto variacao) {
+    public void setVariacaoProduto(Variacao variacao) {
         this.variacao = variacao;
     }
 }

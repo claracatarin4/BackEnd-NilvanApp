@@ -1,5 +1,7 @@
 package Gerenciamento.NilvanApp.dto.response;
 
+import Gerenciamento.NilvanApp.entity.Estoque;
+import Gerenciamento.NilvanApp.entity.Usuario;
 import jakarta.persistence.OneToMany;
 
 import java.util.Date;
@@ -9,11 +11,14 @@ public class MovimentacaoEstoqueResponse {
     private Integer id;
     private String tipo;
     private Integer quantidade;
-    private Date movimentacao;
+    private Date dataMovimentacao;
     private String observacao;
-    private Integer usuario_id;
+    private Integer movimentacaoStatus;
+    private UsuarioResponse usuarioResponse;
+    private EstoqueResponse estoqueResponse;
 
     @OneToMany(mappedBy = "movimentacao_estoque")
+
     public Integer getId() {
         return id;
     }
@@ -38,12 +43,12 @@ public class MovimentacaoEstoqueResponse {
         this.quantidade = quantidade;
     }
 
-    public Date getMovimentacao() {
-        return movimentacao;
+    public Date getDataMovimentacao() {
+        return dataMovimentacao;
     }
 
-    public void setMovimentacao(Date movimentacao) {
-        this.movimentacao = movimentacao;
+    public void setDataMovimentacao(Date dataMovimentacao) {
+        this.dataMovimentacao = dataMovimentacao;
     }
 
     public String getObservacao() {
@@ -54,21 +59,27 @@ public class MovimentacaoEstoqueResponse {
         this.observacao = observacao;
     }
 
-    public Integer getUsuario_id() {
-        return usuario_id;
+    public Integer getMovimentacaoStatus() {
+        return movimentacaoStatus;
     }
 
-    public void setUsuario_id(Integer usuario_id) {
-        this.usuario_id = usuario_id;
+    public void setMovimentacaoStatus(Integer movimentacaoStatus) {
+        this.movimentacaoStatus = movimentacaoStatus;
     }
 
-    public Integer getEstoque_id() {
-        return estoque_id;
+    public UsuarioResponse getUsuarioResponse() {
+        return usuarioResponse;
     }
 
-    public void setEstoque_id(Integer estoque_id) {
-        this.estoque_id = estoque_id;
+    public void setUsuarioResponse(UsuarioResponse usuarioResponse) {
+        this.usuarioResponse = usuarioResponse;
     }
 
-    private Integer estoque_id;
+    public EstoqueResponse getEstoqueResponse() {
+        return estoqueResponse;
+    }
+
+    public void setEstoqueResponse(EstoqueResponse estoqueResponse) {
+        this.estoqueResponse = estoqueResponse;
+    }
 }

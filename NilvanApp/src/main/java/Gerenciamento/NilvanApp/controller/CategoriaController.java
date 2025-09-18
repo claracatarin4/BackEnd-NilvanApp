@@ -28,28 +28,23 @@ public class CategoriaController {
         return ResponseEntity.ok(categoriaService.listarCategorias());
 
     }
-
     @GetMapping("/listar/{id}")
     public ResponseEntity<CategoriaResponse> listarCategoria(@PathVariable("id") Integer categoriaId){
         return ResponseEntity.ok(categoriaService.retornarCategoria(categoriaId));
     }
-
     @PostMapping("/criar")
     public ResponseEntity<CategoriaResponse> criarCategoria(@Valid @RequestBody CategoriaRequest categoria) {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaService.criarCategoria(categoria));
     }
-
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<CategoriaResponse> atualizarCategoria(@PathVariable("id") Integer id, @RequestBody
     CategoriaRequest request){
         return ResponseEntity.ok(this.categoriaService.atualizarCategoria(id,request));
     }
-
     @DeleteMapping("/apagar/{id}")
     public  ResponseEntity apagarCategoria(@PathVariable("id") Integer id){
         this.categoriaService.apagarCategoria(id);
         return ResponseEntity.noContent().build();
     }
-
 
 }

@@ -1,17 +1,8 @@
 package Gerenciamento.NilvanApp.service;
 
-import Gerenciamento.NilvanApp.dto.request.CategoriaRequest;
-import Gerenciamento.NilvanApp.dto.request.ProdutoRequest;
 import Gerenciamento.NilvanApp.dto.request.VariacaoProdutoRequest;
-import Gerenciamento.NilvanApp.dto.response.CategoriaResponse;
-import Gerenciamento.NilvanApp.dto.response.ProdutoResponse;
 import Gerenciamento.NilvanApp.dto.response.VariacaoProdutoResponse;
-import Gerenciamento.NilvanApp.entity.Categoria;
-import Gerenciamento.NilvanApp.entity.Estoque;
-import Gerenciamento.NilvanApp.entity.Produto;
-import Gerenciamento.NilvanApp.entity.VariacaoProduto;
-import Gerenciamento.NilvanApp.repository.CategoriaRepository;
-import Gerenciamento.NilvanApp.repository.EstoqueRepository;
+import Gerenciamento.NilvanApp.entity.Variacao;
 import Gerenciamento.NilvanApp.repository.ProdutoRepository;
 import Gerenciamento.NilvanApp.repository.VariacaoProdutoRepository;
 import org.modelmapper.ModelMapper;
@@ -27,7 +18,7 @@ public class VariacaoProdutoService {
 
     private VariacaoProdutoRepository variacaoProdutoRepository;
 
-    private  ProdutoRepository produtoRepository;
+    private final ProdutoRepository produtoRepository;
 
     public VariacaoProdutoService(VariacaoProdutoRepository variacaoProdutoRepository , ProdutoRepository produtoRepository) {
 
@@ -35,24 +26,23 @@ public class VariacaoProdutoService {
         this.produtoRepository = produtoRepository;
     }
 
-    public List<VariacaoProduto> listarVariacoes() {
+    public List<Variacao> listarVariacoes() {
         return this.variacaoProdutoRepository.findAll();
     }
 
 
     public VariacaoProdutoResponse criarVariacao(VariacaoProdutoRequest variacaoProdutoRequest) {
+        Variacao variacao = new Variacao();
+        variacao.setNome(variacaoProdutoRequest.getNome());
+        variacao.setDescricao(variacaoProdutoRequest.getDescricao());
+        variacao.setProduto(produtoRepository.obterProdutoPorId(variacaoProdutoRequest.getProduto_id()));
 
-        VariacaoProduto variacaoProduto = new VariacaoProduto();
-        variacaoProduto.setNome(variacaoProdutoRequest.getNome());
-        variacaoProduto.setDescricao(variacaoProdutoRequest.getDescricao());
-        variacaoProduto.setProduto(produtoRepository.obterProdutoPorId(variacaoProdutoRequest.getProduto_id()));
-
-        VariacaoProduto variacaoProdutoSalvo = this.variacaoProdutoRepository.save(variacaoProduto);
-        VariacaoProdutoResponse variacaoProdutoResponse = modelMapper.map(variacaoProdutoSalvo, VariacaoProdutoResponse.class);
+        Variacao variacaoSalvo = this.variacaoProdutoRepository.save(variacao);
+        VariacaoProdutoResponse variacaoProdutoResponse = modelMapper.map(variacaoSalvo, VariacaoProdutoResponse.class);
         return variacaoProdutoResponse;
     }
 
-    public List<VariacaoProduto> listarVariacaoProduto() {
+    public List<Variacao> listarVariacaoProduto() {
         return this.variacaoProdutoRepository.listarVariacaoProduto();
     }
 
@@ -61,11 +51,11 @@ public class VariacaoProdutoService {
     }
 
     public VariacaoProdutoResponse atualizarVariacaoProduto(Integer variacaoProdutoId, VariacaoProdutoRequest request) {
-        VariacaoProduto variacaoProduto = this.variacaoProdutoRepository.obterVariacaoProdutoPorId(variacaoProdutoId);
-        if (variacaoProduto != null) {
-            modelMapper.map(request, variacaoProduto);
-            VariacaoProduto variacaoProdutoSalva = this.variacaoProdutoRepository.save(variacaoProduto);
-            return modelMapper.map(variacaoProdutoSalva, VariacaoProdutoResponse.class);
+        Variacao variacao = this.variacaoProdutoRepository.obterVariacaoProdutoPorId(variacaoProdutoId);
+        if (variacao != null) {
+            modelMapper.map(request, variacao);
+            Variacao variacaoSalva = this.variacaoProdutoRepository.save(variacao);
+            return modelMapper.map(variacaoSalva, VariacaoProdutoResponse.class);
         } else {
             throw new IllegalArgumentException("VariacaoProduto não existe");
         }

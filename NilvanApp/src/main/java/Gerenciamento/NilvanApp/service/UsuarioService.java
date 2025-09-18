@@ -1,14 +1,18 @@
 package Gerenciamento.NilvanApp.service;
 
+import Gerenciamento.NilvanApp.dto.request.CategoriaRequest;
+import Gerenciamento.NilvanApp.dto.request.EstoqueRequest;
 import Gerenciamento.NilvanApp.dto.request.ProdutoRequest;
 import Gerenciamento.NilvanApp.dto.request.UsuarioRequest;
+import Gerenciamento.NilvanApp.dto.response.CategoriaResponse;
+import Gerenciamento.NilvanApp.dto.response.EstoqueResponse;
 import Gerenciamento.NilvanApp.dto.response.ProdutoResponse;
 import Gerenciamento.NilvanApp.dto.response.UsuarioResponse;
-import Gerenciamento.NilvanApp.entity.MovimentacaoEstoque;
-import Gerenciamento.NilvanApp.entity.Produto;
-import Gerenciamento.NilvanApp.entity.Usuario;
+import Gerenciamento.NilvanApp.entity.*;
+import Gerenciamento.NilvanApp.repository.EstoqueRepository;
 import Gerenciamento.NilvanApp.repository.MovimentacaoEstoqueRepository;
 import Gerenciamento.NilvanApp.repository.UsuarioRepository;
+import Gerenciamento.NilvanApp.repository.VariacaoProdutoRepository;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,43 +23,47 @@ import java.util.List;
 public class UsuarioService {
 
     @Autowired
-    private ModelMapper modelMapper;
 
     private final UsuarioRepository usuarioRepository;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    private ModelMapper modelMapper;
+
+    public UsuarioService(UsuarioRepository usuarioRepository, ModelMapper modelMapper) {
         this.usuarioRepository = usuarioRepository;
+        this.modelMapper = modelMapper;
+    }
+    public UsuarioResponse criarUsuario(UsuarioRequest usuarioRequest) {
+
+        Usuario usuario = this.modelMapper.map(usuarioRequest,Usuario.class);
+        Usuario usuarioSalvo = this.usuarioRepository.save(usuario);
+        UsuarioResponse usuarioResponse = this.modelMapper.map(usuarioSalvo,UsuarioResponse.class);
+        return usuarioResponse;
     }
 
     public List<Usuario> listarUsuarios(){
-        return this.usuarioRepository.listarUsuariosAtivos();
+        return this.usuarioRepository.ListarUsuario();
     }
 
-    public Usuario listarUsuarioPorId(int idUsuario){
-        return this.usuarioRepository.obterUsuarioAtivoPorId(idUsuario);
+    public UsuarioResponse retornarUsuario (Integer id){
+        return  modelMapper.map(this.usuarioRepository.obterUsuarioPorId(id),UsuarioResponse.class);
     }
 
-    public UsuarioResponse salvar(UsuarioRequest usuarioDtoRequest) {
-        Usuario usuario = modelMapper.map(usuarioDtoRequest, Usuario.class);
-        usuario.setStatus(1);
-
-        Usuario usuarioSave = this.usuarioRepository.save(usuario);
-
-        return modelMapper.map(usuarioSave, UsuarioResponse.class);
-    }
-
-    public UsuarioResponse atualizar(@Valid Integer idUsuario, UsuarioRequest usuarioRequest) {
-        Usuario usuario = this.listarUsuarioPorId(idUsuario);
-        if(usuario!= null){
-            modelMapper.map(usuarioRequest, usuario);
-            Usuario usuarioTemp = this.usuarioRepository.save(usuario);
-            return modelMapper.map(usuarioTemp, UsuarioResponse.class);
+    public UsuarioResponse atualizarUsuario(Integer usuarioId, UsuarioRequest request){
+        Usuario usuario = this.usuarioRepository.obterUsuarioPorId(usuarioId);
+        if (usuario != null){
+            modelMapper.map(request,usuario);
+            Usuario usuarioSalvo = this.usuarioRepository.save(usuario);
+            return modelMapper.map(usuarioSalvo,UsuarioResponse.class);
         }else{
-            return null;
+            throw new IllegalArgumentException("Usuario não existe");
         }
     }
 
-    public void apagar(Integer idUsuario) {
-        this.usuarioRepository.apagadoLogico(idUsuario);
+
+    public void apagarUsuario (Integer usuarioId){
+        this.usuarioRepository.apagarUsuario(usuarioId);
     }
+
+
+
 }
