@@ -12,6 +12,8 @@ public class UsuarioRequest {
 
     private Integer status;
 
+    private Integer status;
+
     public String getNome() {
         return nome;
     }
