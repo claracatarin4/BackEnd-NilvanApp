@@ -6,6 +6,7 @@ import Gerenciamento.NilvanApp.dto.response.CategoriaResponse;
 import Gerenciamento.NilvanApp.dto.response.MovimentacaoEstoqueResponse;
 import Gerenciamento.NilvanApp.entity.Categoria;
 import Gerenciamento.NilvanApp.entity.MovimentacaoEstoque;
+import Gerenciamento.NilvanApp.entity.Produto;
 import Gerenciamento.NilvanApp.service.CategoriaService;
 import Gerenciamento.NilvanApp.service.MovimentacaoEstoqueService;
 import jakarta.validation.Valid;
@@ -24,10 +25,9 @@ public class MovimentacaoEstoqueController {
         this.movimentacaoEstoqueService = movimentacaoEstoqueService;
     }
 
-    @GetMapping("/listar")
-    public ResponseEntity<List<MovimentacaoEstoque>> listarMovimentacaoEstoque(){
-        return ResponseEntity.ok(movimentacaoEstoqueService.listarMovimentacaoEstoque());
-
+    @GetMapping({"/listar"})
+    public ResponseEntity<List<MovimentacaoEstoque>> listarMovimentacaoEstoque() {
+        return ResponseEntity.ok(movimentacaoEstoqueService.listarMovimentacoes());
     }
 
     @GetMapping("/listar/{id}")

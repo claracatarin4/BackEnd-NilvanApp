@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
@@ -25,6 +26,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
 
     @Query("SELECT c FROM Usuario c WHERE c.id = :id")
     Usuario obterUsuarioPorId (@Param("id")Integer id);
+
+    Optional<Usuario> findByEmail(String email);
 
 
 }

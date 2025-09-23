@@ -1,10 +1,12 @@
 package Gerenciamento.NilvanApp.entity;
 
 
+import Gerenciamento.NilvanApp.entity.Roles.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.File;
+import java.util.List;
 
 @Entity
 @Table(
@@ -14,7 +16,6 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "usuario_id")
     private Integer id;
     @Column(name = "usuario_nome")
@@ -35,6 +36,11 @@ public class Usuario {
     @Column(name = "usuario_status")
     private Integer status;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(name="usuario_roles",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name="role_id"))
+    private List<Role> roles;
 
     @OneToMany (mappedBy = "usuario")
 
@@ -92,6 +98,14 @@ public class Usuario {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }
 

@@ -62,9 +62,6 @@ public class MovimentacaoEstoqueService {
         return movimentacaoEstoqueResponse;
     }
 
-    public List<MovimentacaoEstoque> listarMovimentacaoEstoque() {
-        return this.movimentacaoEstoqueRepository.listarMovimentacaoEstoque();
-    }
 
     public MovimentacaoEstoqueResponse retornarMovimentacaoEstoque(Integer id) {
         return modelMapper.map(this.movimentacaoEstoqueRepository.obterMovimentacaoEstoquePorId(id), MovimentacaoEstoqueResponse.class);
