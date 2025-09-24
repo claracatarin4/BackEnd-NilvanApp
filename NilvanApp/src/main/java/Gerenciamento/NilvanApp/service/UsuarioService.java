@@ -50,14 +50,17 @@ public class UsuarioService {
         this.modelMapper = modelMapper;
     }
     public UsuarioResponse criarUsuario(UsuarioRequest usuarioRequest) {
+        Role role = new Role();
+        role.setName(usuarioRequest.getRole());
 
         Usuario usuario = new Usuario();
         usuario.setNome(usuarioRequest.getNome());
         usuario.setCargo(usuarioRequest.getCargo());
         usuario.setImagem(usuarioRequest.getImagem());
         usuario.setEmail(usuarioRequest.getEmail());
-        usuario.setSenha(usuarioRequest.getSenha());
+        usuario.setSenha(securityConfiguration.passwordEncoder().encode(usuarioRequest.getSenha()));
         usuario.setStatus(usuarioRequest.getStatus());
+        usuario.setRoles(List.of(role));
         Usuario usuarioSalvo = this.usuarioRepository.save(usuario);
 
         UsuarioResponse usuarioResponse = new UsuarioResponse();
@@ -112,29 +115,6 @@ public class UsuarioService {
         return new RecoveryJwtTokenDto(jwtTokenService.generateToken(userDetails));
     }
 
-    // Método responsável por criar um usuário
-    public void createUser(CreateUserDto createUserDto) {
-        Role role = new Role();
-        role.setName(createUserDto.role());
-
-        Usuario newUser = new Usuario();
-        newUser.setEmail(createUserDto.email());
-        newUser.setSenha(securityConfiguration.passwordEncoder().encode(createUserDto.password()));
-        newUser.setRoles(List.of(role));
-
-        // Cria um novo usuário com os dados fornecidos
-        /*
-        User newUser = User.builder()
-                .email(createUserDto.email())
-                // Codifica a senha do usuário com o algoritmo bcrypt
-                .password(securityConfiguration.passwordEncoder().encode(createUserDto.password()))
-                // Atribui ao usuário uma permissão específica
-                .roles(List.of(Role.builder().name(createUserDto.role()).build()))
-                .build();
-         */
-        // Salva o novo usuário no banco de dados
-        usuarioRepository.save(newUser);
-    }
 
 
 }

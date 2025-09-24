@@ -1,5 +1,7 @@
 package Gerenciamento.NilvanApp.dto.request;
 
+import Gerenciamento.NilvanApp.entity.Roles.RoleName;
+
 import java.io.File;
 
 public class UsuarioRequest {
@@ -12,6 +14,7 @@ public class UsuarioRequest {
 
     private Integer status;
 
+    private RoleName role;
 
     public String getNome() {
         return nome;
@@ -59,5 +62,13 @@ public class UsuarioRequest {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public RoleName getRole() {
+        return role;
+    }
+
+    public void setRole(RoleName role) {
+        this.role = role;
     }
 }
