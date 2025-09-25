@@ -23,28 +23,32 @@ public class SecurityConfiguration {
     @Autowired
     private UserAuthenticationFilter userAuthenticationFilter;
 
+    // Endpoints que NÃO precisam de autenticação
     public static final String [] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
             "/api/usuario/criar",
-            "/h2-console",
-            // 🔓 Swagger/OpenAPI UI
-            "/v3/api-docs/**",
-            "/swagger-ui/**",
+            "/api/usuario/login",
+            "/v3/api-docs/**", // Documentação OpenAPI (Swagger)
+            "/swagger-ui/**",  // UI do Swagger
             "/swagger-ui.html"
     };
 
-    // Endpoints que requerem autenticação para serem acessados
+    // Endpoints que requerem autenticação (qualquer usuário logado)
     public static final String [] ENDPOINTS_WITH_AUTHENTICATION_REQUIRED = {
-            "/users/test"
+            "/api/usuario/test",
+            "/api/usuario/me" // Adicionado para garantir que seu endpoint 'me' esteja seguro
     };
 
-    // Endpoints que só podem ser acessador por usuários com permissão de cliente
+    // Endpoints para clientes (CUSTOMER)
     public static final String [] ENDPOINTS_CUSTOMER = {
-            "/users/test/customer"
+            "/api/usuario/test/customer"
     };
 
-    // Endpoints que só podem ser acessador por usuários com permissão de administrador
+    // Endpoints para administradores (ADMIN)
     public static final String [] ENDPOINTS_ADMIN = {
-            "/users/test/administrator"
+            "/api/usuario/test/administrator",
+            "/api/usuario/listar/**",
+            "/api/usuario/apagar/**",
+            "/api/usuario/atualizar/**"
     };
 
     @Bean
@@ -53,18 +57,23 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() //adicionado para funcionamento do swagger
-                        .requestMatchers(ENDPOINTS_ADMIN).hasRole("ADMINISTRATOR")
+                        // Permite acesso a endpoints públicos
+                        .requestMatchers(HttpMethod.GET, ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
+                        .requestMatchers(HttpMethod.POST, ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Para permitir requisições pré-voo do navegador
+
+                        // Protege endpoints de acordo com a permissão (ROLE)
+                        .requestMatchers(ENDPOINTS_ADMIN).hasRole("ADMIN")
                         .requestMatchers(ENDPOINTS_CUSTOMER).hasRole("CUSTOMER")
+
+                        // Autentica todos os outros endpoints
                         .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_REQUIRED).authenticated()
-                        .anyRequest().denyAll()
+                        .anyRequest().denyAll() // Nega qualquer requisição que não foi mapeada acima
                 )
                 .addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {

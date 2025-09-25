@@ -20,28 +20,28 @@ public class EstoqueController {
         this.estoqueService = estoqueService;
     }
 
-    @GetMapping
+    @GetMapping({"/listar"})
     public ResponseEntity<List<EstoqueResponse>> listarEstoque() {
         return ResponseEntity.ok(estoqueService.listarEstoques());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/listar/{id}")
     public ResponseEntity<EstoqueResponse> listarEstoque(@PathVariable("id") Integer estoqueId) {
         return ResponseEntity.ok(estoqueService.retornarEstoque(estoqueId));
     }
 
-    @PostMapping
+    @PostMapping("/criar")
     public ResponseEntity<EstoqueResponse> criarEstoque(@Valid @RequestBody EstoqueRequest estoque) {
         EstoqueResponse novoEstoque = estoqueService.criarEstoque(estoque);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoEstoque);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/atualizar/{id}")
     public ResponseEntity<EstoqueResponse> atualizarEstoque(@PathVariable("id") Integer id, @Valid @RequestBody EstoqueRequest request) {
         return ResponseEntity.ok(this.estoqueService.atualizarEstoque(id, request));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/apagar/{id}")
     public ResponseEntity<Void> apagarEstoque(@PathVariable("id") Integer id) {
         this.estoqueService.apagarEstoque(id);
         return ResponseEntity.noContent().build();
