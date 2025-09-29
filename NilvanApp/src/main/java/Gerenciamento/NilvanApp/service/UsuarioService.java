@@ -1,26 +1,15 @@
 package Gerenciamento.NilvanApp.service;
 
 import Gerenciamento.NilvanApp.config.SecurityConfiguration;
-import Gerenciamento.NilvanApp.dto.request.CategoriaRequest;
-import Gerenciamento.NilvanApp.dto.request.EstoqueRequest;
-import Gerenciamento.NilvanApp.dto.request.ProdutoRequest;
 import Gerenciamento.NilvanApp.dto.request.UsuarioRequest;
-import Gerenciamento.NilvanApp.dto.response.CategoriaResponse;
-import Gerenciamento.NilvanApp.dto.response.EstoqueResponse;
-import Gerenciamento.NilvanApp.dto.response.ProdutoResponse;
 import Gerenciamento.NilvanApp.dto.response.UsuarioResponse;
-import Gerenciamento.NilvanApp.dto.roles.CreateUserDto;
 import Gerenciamento.NilvanApp.dto.roles.LoginUserDto;
 import Gerenciamento.NilvanApp.dto.roles.RecoveryJwtTokenDto;
 import Gerenciamento.NilvanApp.entity.*;
 import Gerenciamento.NilvanApp.entity.Roles.Role;
-import Gerenciamento.NilvanApp.repository.EstoqueRepository;
-import Gerenciamento.NilvanApp.repository.MovimentacaoEstoqueRepository;
 import Gerenciamento.NilvanApp.repository.UsuarioRepository;
-import Gerenciamento.NilvanApp.repository.VariacaoProdutoRepository;
 import Gerenciamento.NilvanApp.service.UserService.JwtTokenService;
 import Gerenciamento.NilvanApp.service.UserService.UserDetailsImpl;
-import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

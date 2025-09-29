@@ -40,7 +40,11 @@ public class SecurityConfiguration {
 
     // Endpoints para clientes (CUSTOMER)
     public static final String [] ENDPOINTS_CUSTOMER = {
-            "/api/usuario/test/customer"
+            "/api/usuario/test/customer",
+            "/api/usuario/criar",
+            "/api/usuario/login",
+            "/api/usuario/listar/**"
+
     };
 
     // Endpoints para administradores (ADMIN)
