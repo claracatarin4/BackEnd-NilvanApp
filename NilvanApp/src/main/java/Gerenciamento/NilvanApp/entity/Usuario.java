@@ -42,8 +42,6 @@ public class Usuario {
             inverseJoinColumns = @JoinColumn(name="role_id"))
     private List<Role> roles;
 
-    @OneToMany (mappedBy = "usuario")
-
     public Integer getId() {
         return id;
     }

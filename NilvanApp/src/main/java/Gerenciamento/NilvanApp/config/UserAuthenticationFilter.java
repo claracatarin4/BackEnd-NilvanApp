@@ -1,6 +1,7 @@
 package Gerenciamento.NilvanApp.config;
 
 import Gerenciamento.NilvanApp.entity.Usuario;
+
 import Gerenciamento.NilvanApp.repository.UsuarioRepository;
 import Gerenciamento.NilvanApp.service.UserService.JwtTokenService;
 import Gerenciamento.NilvanApp.service.UserService.UserDetailsImpl;
@@ -12,23 +13,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import java.io.IOException;
 import java.util.Arrays;
 
-
 @Component
 public class UserAuthenticationFilter extends OncePerRequestFilter {
-
     @Autowired
     private JwtTokenService jwtTokenService; // Service que definimos anteriormente
-
     @Autowired
     private UsuarioRepository usuarioRepository; // Repository que definimos anteriormente
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // Verifica se o endpoint requer autenticação antes de processar a requisição
@@ -69,4 +64,5 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
                 requestURI.startsWith(publicEndpoint.replace("/**", "")) // suporta wildcard
         );
     }
+
 }

@@ -28,6 +28,4 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
     Usuario obterUsuarioPorId (@Param("id")Integer id);
 
     Optional<Usuario> findByEmail(String email);
-
-
 }

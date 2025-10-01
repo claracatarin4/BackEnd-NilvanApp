@@ -1,6 +1,5 @@
 package Gerenciamento.NilvanApp.config;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
@@ -23,36 +21,24 @@ public class SecurityConfiguration {
     @Autowired
     private UserAuthenticationFilter userAuthenticationFilter;
 
-    // Endpoints que NÃO precisam de autenticação
     public static final String [] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
-            "/api/usuario/criar",
-            "/api/usuario/login",
-            "/v3/api-docs/**", // Documentação OpenAPI (Swagger)
-            "/swagger-ui/**",  // UI do Swagger
+            "/api/usuario/login", // Url que usaremos para fazer login
+            "/api/usuario/criar", // Url que usaremos para criar um usuário
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
             "/swagger-ui.html"
     };
-
-    // Endpoints que requerem autenticação (qualquer usuário logado)
+    // Endpoints que requerem autenticação para serem acessados
     public static final String [] ENDPOINTS_WITH_AUTHENTICATION_REQUIRED = {
-            "/api/usuario/test",
-            "/api/usuario/me" // Adicionado para garantir que seu endpoint 'me' esteja seguro
+            "/usuario/listar"
     };
-
-    // Endpoints para clientes (CUSTOMER)
+    // Endpoints que só podem ser acessador por usuários com permissão de cliente
     public static final String [] ENDPOINTS_CUSTOMER = {
-            "/api/usuario/test/customer",
-            "/api/usuario/criar",
-            "/api/usuario/login",
-            "/api/usuario/listar/**"
-
+            "/jogo"
     };
-
-    // Endpoints para administradores (ADMIN)
+    // Endpoints que só podem ser acessador por usuários com permissão de administrador
     public static final String [] ENDPOINTS_ADMIN = {
-            "/api/usuario/test/administrator",
-            "/api/usuario/listar/**",
-            "/api/usuario/apagar/**",
-            "/api/usuario/atualizar/**"
+            "/categoria"
     };
 
     @Bean
@@ -61,18 +47,12 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Permite acesso a endpoints públicos
-                        .requestMatchers(HttpMethod.GET, ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
-                        .requestMatchers(HttpMethod.POST, ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Para permitir requisições pré-voo do navegador
-
-                        // Protege endpoints de acordo com a permissão (ROLE)
+                        .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() //adicionado para funcionamento do swagger
                         .requestMatchers(ENDPOINTS_ADMIN).hasRole("ADMIN")
-                        .requestMatchers(ENDPOINTS_CUSTOMER).hasRole("CUSTOMER")
-
-                        // Autentica todos os outros endpoints
+                        .requestMatchers(ENDPOINTS_CUSTOMER).hasRole("OPERADOR")
                         .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_REQUIRED).authenticated()
-                        .anyRequest().denyAll() // Nega qualquer requisição que não foi mapeada acima
+                        .anyRequest().denyAll()
                 )
                 .addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

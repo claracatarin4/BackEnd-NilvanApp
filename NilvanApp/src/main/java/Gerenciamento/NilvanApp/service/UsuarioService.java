@@ -23,12 +23,9 @@ public class UsuarioService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
     @Autowired
     private JwtTokenService jwtTokenService;
-
     private final UsuarioRepository usuarioRepository;
-
     @Autowired
     private SecurityConfiguration securityConfiguration;
 

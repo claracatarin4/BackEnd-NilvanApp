@@ -9,9 +9,11 @@ import jakarta.persistence.*;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column (name= "role_id")
     private Integer id;
 
     @Enumerated(EnumType.STRING)
+    @Column (name= "role_name")
     private RoleName name;
 
     public Integer getId() {
