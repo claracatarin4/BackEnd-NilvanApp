@@ -5,8 +5,8 @@ import Gerenciamento.NilvanApp.dto.request.UsuarioRequest;
 import Gerenciamento.NilvanApp.dto.response.UsuarioResponse;
 import Gerenciamento.NilvanApp.dto.roles.LoginUserDto;
 import Gerenciamento.NilvanApp.dto.roles.RecoveryJwtTokenDto;
-import Gerenciamento.NilvanApp.entity.*;
 import Gerenciamento.NilvanApp.entity.Roles.Role;
+import Gerenciamento.NilvanApp.entity.Usuario;
 import Gerenciamento.NilvanApp.repository.UsuarioRepository;
 import Gerenciamento.NilvanApp.service.UserService.JwtTokenService;
 import Gerenciamento.NilvanApp.service.UserService.UserDetailsImpl;
@@ -79,7 +79,6 @@ public class UsuarioService {
             throw new IllegalArgumentException("Usuario não existe");
         }
     }
-
 
     public void apagarUsuario (Integer usuarioId){
         this.usuarioRepository.apagarUsuario(usuarioId);

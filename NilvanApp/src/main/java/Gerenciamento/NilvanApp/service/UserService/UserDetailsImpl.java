@@ -41,4 +41,5 @@ public class UserDetailsImpl implements UserDetails {
         return usuario.getEmail();
     } // Retorna o nome de usuário do usuário que criamos anteriormente
 
+
 }
