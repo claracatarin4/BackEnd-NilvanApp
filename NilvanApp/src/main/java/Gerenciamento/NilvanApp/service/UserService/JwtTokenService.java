@@ -18,7 +18,7 @@ public class JwtTokenService {
 
     private static final String ISSUER = "nilvanapp-api"; // Emissor do token
 
-    public String generateToken(UserDetailsImpl usuario) {
+    public String generateToken(UserDetailsImpl user) {
         try {
             // Define o algoritmo HMAC SHA256 para criar a assinatura do token passando a chave secreta definida
             Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
@@ -26,7 +26,7 @@ public class JwtTokenService {
                     .withIssuer(ISSUER) // Define o emissor do token
                     .withIssuedAt(creationDate()) // Define a data de emissão do token
                     .withExpiresAt(expirationDate()) // Define a data de expiração do token
-                    .withSubject(usuario.getUsername()) // Define o assunto do token (neste caso, o nome de usuário)
+                    .withSubject(user.getUsername()) // Define o assunto do token (neste caso, o nome de usuário)
                     .sign(algorithm); // Assina o token usando o algoritmo especificado
         } catch (JWTCreationException exception){
             throw new JWTCreationException("Erro ao gerar token.", exception);
@@ -54,4 +54,5 @@ public class JwtTokenService {
     private Instant expirationDate() {
         return ZonedDateTime.now(ZoneId.of("America/Recife")).plusHours(4).toInstant();
     }
+
 }

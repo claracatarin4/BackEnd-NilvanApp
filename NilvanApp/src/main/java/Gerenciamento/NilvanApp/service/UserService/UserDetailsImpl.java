@@ -40,6 +40,4 @@ public class UserDetailsImpl implements UserDetails {
     public String getUsername() {
         return usuario.getEmail();
     } // Retorna o nome de usuário do usuário que criamos anteriormente
-
-
 }

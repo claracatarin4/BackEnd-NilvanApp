@@ -10,6 +10,7 @@ import Gerenciamento.NilvanApp.entity.Usuario;
 import Gerenciamento.NilvanApp.repository.UsuarioRepository;
 import Gerenciamento.NilvanApp.service.UserService.JwtTokenService;
 import Gerenciamento.NilvanApp.service.UserService.UserDetailsImpl;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -47,6 +48,7 @@ public class UsuarioService {
         usuario.setSenha(securityConfiguration.passwordEncoder().encode(usuarioRequest.getSenha()));
         usuario.setStatus(usuarioRequest.getStatus());
         usuario.setRoles(List.of(role));
+
         Usuario usuarioSalvo = this.usuarioRepository.save(usuario);
 
         UsuarioResponse usuarioResponse = new UsuarioResponse();
@@ -65,25 +67,43 @@ public class UsuarioService {
         return this.usuarioRepository.ListarUsuario();
     }
 
-    public UsuarioResponse retornarUsuario (Integer id){
-        return  modelMapper.map(this.usuarioRepository.obterUsuarioPorId(id),UsuarioResponse.class);
+    public Usuario listarUsuarioPorId(int idUsuario){
+        return this.usuarioRepository.obterUsuarioPorId(idUsuario);
     }
 
-    public UsuarioResponse atualizarUsuario(Integer usuarioId, UsuarioRequest request){
+    public UsuarioResponse salvarUsuario(UsuarioRequest usuarioRequest) {
+        Role role = new Role();
+        role.setName(usuarioRequest.getRole());
+
+        Usuario usuario = new Usuario();
+        usuario.setNome(usuarioRequest.getNome());
+        usuario.setCargo(usuarioRequest.getCargo());
+        usuario.setImagem(usuarioRequest.getImagem());
+        usuario.setEmail(usuarioRequest.getEmail());
+        usuario.setSenha(securityConfiguration.passwordEncoder().encode(usuarioRequest.getSenha()));
+        usuario.setStatus(1);
+        usuario.setRoles(List.of(role));
+
+        Usuario usuarioSave = this.usuarioRepository.save(usuario);
+
+        return modelMapper.map(usuarioSave, UsuarioResponse.class);
+    }
+
+    public UsuarioResponse atualizarUsuario(@Valid Integer usuarioId, UsuarioRequest usuarioRequest){
         Usuario usuario = this.usuarioRepository.obterUsuarioPorId(usuarioId);
         if (usuario != null){
-            modelMapper.map(request,usuario);
+            modelMapper.map(usuarioRequest,usuario);
             Usuario usuarioSalvo = this.usuarioRepository.save(usuario);
             return modelMapper.map(usuarioSalvo,UsuarioResponse.class);
         }else{
-            throw new IllegalArgumentException("Usuario não existe");
+            return null;
         }
     }
 
     public void apagarUsuario (Integer usuarioId){
+
         this.usuarioRepository.apagarUsuario(usuarioId);
     }
-
 
     public RecoveryJwtTokenDto authenticateUser(LoginUserDto loginUserDto) {
         // Cria um objeto de autenticação com o email e a senha do usuário
@@ -99,7 +119,5 @@ public class UsuarioService {
         // Gera um token JWT para o usuário autenticado
         return new RecoveryJwtTokenDto(jwtTokenService.generateToken(userDetails));
     }
-
-
 
 }

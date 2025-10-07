@@ -20,10 +20,13 @@ import java.util.Arrays;
 
 @Component
 public class UserAuthenticationFilter extends OncePerRequestFilter {
+
     @Autowired
     private JwtTokenService jwtTokenService; // Service que definimos anteriormente
+
     @Autowired
     private UsuarioRepository usuarioRepository; // Repository que definimos anteriormente
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // Verifica se o endpoint requer autenticação antes de processar a requisição
