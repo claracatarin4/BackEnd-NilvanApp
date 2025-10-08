@@ -24,7 +24,6 @@ public class SecurityConfiguration {
     public static final String [] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
             "/api/usuario/criar", // Url que usaremos para criar um usuário
             "/api/usuario/login",
-            "/api/usuario/listar",
             "/api/movimentacao_estoque/criar",
             "/api/movimentacao_estoque/listar",
 
@@ -41,13 +40,13 @@ public class SecurityConfiguration {
 
     // Endpoints que só podem ser acessador por usuários com permissão de cliente
     public static final String [] ENDPOINTS_OPERADOR = {
+            "/api/usuario/listar",
 
 
     };
 
     // Endpoints que só podem ser acessador por usuários com permissão de administrador
     public static final String [] ENDPOINTS_ADMIN = {
-            "/api/usuario/listar",
             "/api/movimentacao_estoque/criar",
             "/api/movimentacao_estoque/listar",
 

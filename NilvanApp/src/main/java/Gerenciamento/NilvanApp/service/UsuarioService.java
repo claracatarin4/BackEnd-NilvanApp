@@ -7,6 +7,7 @@ import Gerenciamento.NilvanApp.dto.roles.LoginUserDto;
 import Gerenciamento.NilvanApp.dto.roles.RecoveryJwtTokenDto;
 import Gerenciamento.NilvanApp.entity.Roles.Role;
 import Gerenciamento.NilvanApp.entity.Usuario;
+import Gerenciamento.NilvanApp.repository.RoleRepository;
 import Gerenciamento.NilvanApp.repository.UsuarioRepository;
 import Gerenciamento.NilvanApp.service.UserService.JwtTokenService;
 import Gerenciamento.NilvanApp.service.UserService.UserDetailsImpl;
@@ -27,18 +28,21 @@ public class UsuarioService {
     @Autowired
     private JwtTokenService jwtTokenService;
     private final UsuarioRepository usuarioRepository;
+
+    private final RoleRepository roleRepository;
     @Autowired
     private SecurityConfiguration securityConfiguration;
 
     private ModelMapper modelMapper;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, ModelMapper modelMapper) {
+    public UsuarioService(UsuarioRepository usuarioRepository, ModelMapper modelMapper, RoleRepository roleRepository) {
         this.usuarioRepository = usuarioRepository;
         this.modelMapper = modelMapper;
+        this.roleRepository = roleRepository;
     }
     public UsuarioResponse criarUsuario(UsuarioRequest usuarioRequest) {
         Role role = new Role();
-        role.setName(usuarioRequest.getRole());
+        role= roleRepository.findByName(usuarioRequest.getRole());
 
         Usuario usuario = new Usuario();
         usuario.setNome(usuarioRequest.getNome());
@@ -73,7 +77,7 @@ public class UsuarioService {
 
     public UsuarioResponse salvarUsuario(UsuarioRequest usuarioRequest) {
         Role role = new Role();
-        role.setName(usuarioRequest.getRole());
+        role= roleRepository.findByName(usuarioRequest.getRole());
 
         Usuario usuario = new Usuario();
         usuario.setNome(usuarioRequest.getNome());
