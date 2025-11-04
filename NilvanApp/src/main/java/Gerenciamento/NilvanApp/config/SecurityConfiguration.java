@@ -24,9 +24,6 @@ public class SecurityConfiguration {
     public static final String [] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
             "/api/usuario/criar", // Url que usaremos para criar um usuário
             "/api/usuario/login",
-            "/api/movimentacao_estoque/criar",
-            "/api/movimentacao_estoque/listar",
-
 
             "/v3/api-docs/**",
             "/swagger-ui/**",
@@ -41,15 +38,21 @@ public class SecurityConfiguration {
     // Endpoints que só podem ser acessador por usuários com permissão de cliente
     public static final String [] ENDPOINTS_OPERADOR = {
             "/api/usuario/listar",
-
-
+            "/api/usuario/apagar/{idUsuario}",
     };
 
     // Endpoints que só podem ser acessador por usuários com permissão de administrador
     public static final String [] ENDPOINTS_ADMIN = {
             "/api/movimentacao_estoque/criar",
             "/api/movimentacao_estoque/listar",
-
+            "/api/estoque/criar",
+            "/api/estoque/listar",
+            "/api/categoria/criar",
+            "/api/categoria/listar",
+            "/api/produto/criar",
+            "/api/produto/listar",
+            "/api/variacaoproduto/criar",
+            "/api/variacaoproduto/listar",
     };
 
     @Bean
@@ -60,7 +63,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() //adicionado para funcionamento do swagger
-                        .requestMatchers(ENDPOINTS_ADMIN).hasRole("ADMINISTRATOR")
+                        .requestMatchers(ENDPOINTS_ADMIN).hasRole("ADMIN")
                         .requestMatchers(ENDPOINTS_OPERADOR).hasRole("OPERADOR")
                         .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_REQUIRED).authenticated()
                         .anyRequest().denyAll()
