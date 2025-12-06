@@ -2,6 +2,7 @@ package Gerenciamento.NilvanApp.service;
 
 import Gerenciamento.NilvanApp.config.SecurityConfiguration;
 import Gerenciamento.NilvanApp.dto.request.UsuarioRequest;
+import Gerenciamento.NilvanApp.dto.response.UsuarioLoginDTOResponse;
 import Gerenciamento.NilvanApp.dto.response.UsuarioResponse;
 import Gerenciamento.NilvanApp.dto.roles.LoginUserDto;
 import Gerenciamento.NilvanApp.dto.roles.RecoveryJwtTokenDto;
@@ -119,9 +120,17 @@ public class UsuarioService {
 
         // Obtém o objeto UserDetails do usuário autenticado
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        Usuario usuario = usuarioRepository.findByEmail(loginUserDto.email()).orElse(null);
+        UsuarioLoginDTOResponse usuarioLogin = new UsuarioLoginDTOResponse();
+        usuarioLogin.setId(usuario.getId());
+        usuarioLogin.setNome(usuario.getNome());
+        usuarioLogin.setCargo(usuario.getCargo());
+        usuarioLogin.setEmail(usuario.getEmail());
+        usuarioLogin.setImagem(usuario.getImagem());
+        usuarioLogin.setStatus(usuario.getStatus());
 
         // Gera um token JWT para o usuário autenticado
-        return new RecoveryJwtTokenDto(jwtTokenService.generateToken(userDetails));
+        return new RecoveryJwtTokenDto(usuarioLogin, jwtTokenService.generateToken(userDetails));
     }
 
 }
