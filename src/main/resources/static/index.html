@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NilvanApp - Gestão de Estoque</title>
+    <link rel="icon" type="image/png" href="imagens/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #ffffff;
+            color: #0F2553;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #ffffff;
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(15, 37, 83, 0.15);
+        }
+
+        .navbar-logo img {
+            width: 120px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 50px;
+            list-style: none;
+        }
+
+        .navbar-links a {
+            color: #0F2553;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .navbar-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #0F2553;
+            transition: width 0.3s ease;
+        }
+
+        .navbar-links a:hover::after {
+            width: 100%;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 50px 60px;
+            background: linear-gradient(90deg, #f5f7fa 0%, #ffffff 50%, #f0f3f8 100%);
+            position: relative;
+            margin-top: 70px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(15, 37, 83, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 56px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 30px;
+            color: #0F2553;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 50px;
+            line-height: 1.8;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .stat {
+            background: #fff;
+            border: 2px solid #e0e8f0;
+            border-radius: 16px;
+            padding: 30px 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(15, 37, 83, 0.08);
+        }
+
+        .stat:hover {
+            border-color: #0F2553;
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(15, 37, 83, 0.15);
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #0F2553;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #a0a0a0;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn-primary {
+            padding: 16px 50px;
+            background: #0F2553;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            box-shadow: 0 8px 20px rgba(15, 37, 83, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(15, 37, 83, 0.35);
+        }
+
+        .btn-secondary {
+            padding: 16px 50px;
+            background: transparent;
+            color: #0F2553;
+            border: 2px solid #0F2553;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .btn-secondary:hover {
+            background: #0F2553;
+            color: #fff;
+        }
+
+        /* QR BOX */
+        .hero-right {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .qr-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .qr-code {
+            width: 280px;
+            height: 280px;
+            background: #fff;
+            border: 3px solid #0F2553;
+            border-radius: 24px;
+            padding: 15px;
+            box-shadow: 0 15px 50px rgba(15, 37, 83, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .qr-container .btn-primary {
+            min-width: 280px;
+            text-align: center;
+        }
+
+        /* SEÇÕES */
+        .section {
+            padding: 100px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+            border-top: 1px solid #e0e8f0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-header h2 {
+            font-size: 44px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: #0F2553;
+        }
+
+        .section-header p {
+            font-size: 18px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* TIMELINE */
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 35px;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item {
+            text-align: center;
+            position: relative;
+        }
+
+        .timeline-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #0F2553 0%, #1a3a6e 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(15, 37, 83, 0.2);
+            transform: rotate(45deg);
+        }
+
+        .timeline-icon > * {
+            transform: rotate(-45deg);
+        }
+
+        .timeline-label {
+            font-weight: 700;
+            color: #0F2553;
+            font-size: 16px;
+            margin-bottom: 6px;
+        }
+
+        .timeline-sublabel {
+            font-size: 13px;
+            color: #a0a0a0;
+            font-weight: 500;
+        }
+
+        /* TECH GRID */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .tech-card {
+            background: #fff;
+            border: 2px solid #e0e8f0;
+            border-radius: 20px;
+            padding: 45px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(15, 37, 83, 0.08);
+        }
+
+        .tech-card:hover {
+            transform: translateY(-12px);
+            border-color: #0F2553;
+            box-shadow: 0 20px 50px rgba(15, 37, 83, 0.2);
+        }
+
+        .tech-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .tech-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0F2553;
+            margin-bottom: 10px;
+        }
+
+        .tech-desc {
+            font-size: 15px;
+            color: #666;
+        }
+
+        /* INVESTMENT */
+        .investment-wrapper {
+            background: #fff;
+            border: 2px solid #e0e8f0;
+            border-radius: 20px;
+            padding: 60px;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(15, 37, 83, 0.08);
+        }
+
+        .investment-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .investment-table thead {
+            background: #f5f7fa;
+            border-bottom: 2px solid #e0e8f0;
+        }
+
+        .investment-table th {
+            padding: 25px;
+            text-align: left;
+            font-weight: 700;
+            color: #0F2553;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .investment-table td {
+            padding: 22px 25px;
+            border-bottom: 1px solid #e0e8f0;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .investment-table tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        .investment-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .investment-total {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 30px;
+            padding: 30px 25px 0;
+            border-top: 2px solid #e0e8f0;
+            margin-top: 25px;
+            padding-top: 30px;
+        }
+
+        .total-label {
+            font-weight: 700;
+            color: #666;
+            font-size: 17px;
+        }
+
+        .total-value {
+            font-weight: 800;
+            color: #0F2553;
+            font-size: 26px;
+        }
+
+        /* PHONES */
+        .phones-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .phone-mockup {
+            perspective: 1000px;
+            flex: 0 0 auto;
+        }
+
+        .phone {
+            width: 300px;
+            height: 620px;
+            background: #000;
+            border-radius: 50px;
+            border: 14px solid #000;
+            box-shadow: 0 20px 60px rgba(15, 37, 83, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 170px;
+            height: 30px;
+            background: #000;
+            border-radius: 0 0 25px 25px;
+            z-index: 10;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 8px;
+            opacity: 1;
+        }
+
+        .phone-screen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 1;
+        }
+
+        .phone-button {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 130px;
+            height: 5px;
+            background: #fff;
+            border-radius: 3px;
+            z-index: 10;
+        }
+
+        /* FOOTER */
+        .footer {
+            padding: 60px 50px;
+            border-top: 1px solid #e0e8f0;
+            text-align: center;
+            color: #a0a0a0;
+            font-size: 14px;
+            background: #f5f7fa;
+        }
+
+        /* RESPONSIVO */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .hero-text h1 {
+                font-size: 42px;
+            }
+
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 70px 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-links {
+                display: none;
+            }
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .hero {
+                padding: 100px 20px 40px;
+            }
+
+            .hero-content {
+                gap: 40px;
+            }
+
+            .hero-text h1 {
+                font-size: 32px;
+            }
+
+            .section {
+                padding: 50px 20px;
+            }
+
+            .section-header h2 {
+                font-size: 32px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+            }
+
+            .timeline {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 20px;
+            }
+
+            .timeline-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 32px;
+            }
+
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .investment-wrapper {
+                padding: 30px;
+            }
+
+            .investment-table th,
+            .investment-table td {
+                padding: 15px;
+                font-size: 13px;
+            }
+
+            .investment-total {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .total-value {
+                font-size: 22px;
+            }
+
+            .phones-container {
+                gap: 30px;
+            }
+
+            .phone {
+                width: 240px;
+                height: 500px;
+                border: 10px solid #000;
+                border-radius: 40px;
+            }
+
+            .phone-notch {
+                width: 140px;
+                height: 25px;
+                border-radius: 0 0 20px 20px;
+            }
+
+            .phone-button {
+                width: 100px;
+                height: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="navbar-logo">
+        <img src="imagens/nilvan 2.png" alt="NilvanApp Logo">
+    </div>
+    <ul class="navbar-links">
+        <li><a href="#home">Início</a></li>
+        <li><a href="#tecnologias">Tecnologias</a></li>
+        <li><a href="#telas">Interfaces</a></li>
+        <li><a href="#investimento">Investimento</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+    <div class="hero-content">
+        <div class="hero-text">
+            <h1>Organize seus produtos com eficiência</h1>
+            <p>Controle completo do seu estoque com acompanhamento em tempo real de entradas, saídas e variantes de produtos como cores e tamanhos.</p>
+
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Estoques Criáveis</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Variantes de Produtos</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">✓</div>
+                    <div class="stat-label">Controle de Baixa</div>
+                </div>
+            </div>
+
+            <div class="hero-buttons">
+                <button class="btn-primary">Comece Agora</button>
+                <button class="btn-secondary">Conhecer Mais</button>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <div class="qr-container">
+                <div class="qr-code">
+                    <img src="imagens/qrcode.png" alt="QR Code">
+                </div>
+                <button class="btn-primary">Faça Download</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- TECNOLOGIAS -->
+<section class="section" id="tecnologias">
+    <div class="section-header">
+        <h2>Tecnologias Implementadas</h2>
+        <p>Ferramentas e plataformas de ponta para máxima performance</p>
+    </div>
+
+    <div class="tech-grid">
+        <div class="tech-card">
+            <span class="tech-icon"><img src="imagens/figma-svgrepo-com (2) 1.png" alt="Figma" style="width: 60px; height: 60px; object-fit: contain;"></span>
+            <div class="tech-name">Figma</div>
+            <div class="tech-desc">Design e Prototipagem</div>
+        </div>
+        <div class="tech-card">
+            <span class="tech-icon"><img src="imagens/spring-boot-svgrepo-com 1.png" alt="Spring Boot" style="width: 60px; height: 60px; object-fit: contain;"></span>
+            <div class="tech-name">Java Spring</div>
+            <div class="tech-desc">Framework Backend</div>
+        </div>
+        <div class="tech-card">
+            <span class="tech-icon"><img src="imagens/react-svgrepo-com 1.png" alt="React Native" style="width: 60px; height: 60px; object-fit: contain;"></span>
+            <div class="tech-name">React Native</div>
+            <div class="tech-desc">App Multiplataforma</div>
+        </div>
+        <div class="tech-card">
+            <span class="tech-icon"><img src="imagens/mysql-svgrepo-com 1.png" alt="MySQL" style="width: 60px; height: 60px; object-fit: contain;"></span>
+            <div class="tech-name">MySQL</div>
+            <div class="tech-desc">Armazenamento Dados</div>
+        </div>
+        <div class="tech-card">
+            <span class="tech-icon"><img src="imagens/docker-svgrepo-com 1.png" alt="Docker" style="width: 60px; height: 60px; object-fit: contain;"></span>
+            <div class="tech-name">Docker</div>
+            <div class="tech-desc">Orquestração</div>
+        </div>
+        <div class="tech-card">
+            <span class="tech-icon"><img src="imagens/jenkins-svgrepo-com 1 (1).png" alt="Jenkins" style="width: 80px; height: 80px; object-fit: contain;"></span>
+            <div class="tech-name">Jenkins</div>
+            <div class="tech-desc">Automação Deploy</div>
+        </div>
+    </div>
+</section>
+
+<!-- INVESTIMENTO -->
+<section class="section" id="investimento">
+    <div class="section-header">
+        <h2>Orçamento do Projeto</h2>
+        <p>Investimento total para desenvolvimento completo</p>
+    </div>
+
+    <div class="investment-wrapper">
+        <table class="investment-table">
+            <thead>
+            <tr>
+                <th>Profissional</th>
+                <th>Valor Mensal</th>
+                <th>Período</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <div style="font-weight: 700; margin-bottom: 4px;">Engenheira de Software</div>
+                    <div style="font-size: 14px; color: #a0a0a0;">Full Stack, DevOps, Testes</div>
+                </td>
+                <td>R$ 5.200,00</td>
+                <td>6 Meses</td>
+                <td style="font-weight: 700;">R$ 31.200,00</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="investment-total">
+            <span class="total-label">Investimento Total:</span>
+            <span class="total-value">R$ 31.200,00</span>
+        </div>
+    </div>
+</section>
+
+<!-- TELAS DO APP -->
+<section class="section" id="telas">
+    <div class="section-header">
+        <h2>Conheça a Interface</h2>
+        <p>Visualize as principais telas do NilvanApp</p>
+    </div>
+
+    <div class="phones-container">
+        <div class="phone-mockup">
+            <div class="phone">
+                <div class="phone-notch"></div>
+                <div class="phone-screen">
+                    <img src="imagens/Home.png" alt="Tela Home">
+                </div>
+                <div class="phone-button"></div>
+            </div>
+        </div>
+
+        <div class="phone-mockup">
+            <div class="phone">
+                <div class="phone-notch"></div>
+                <div class="phone-screen">
+                    <img src="imagens/Home (1).png" alt="Tela Produtos">
+                </div>
+                <div class="phone-button"></div>
+            </div>
+        </div>
+
+        <div class="phone-mockup">
+            <div class="phone">
+                <div class="phone-notch"></div>
+                <div class="phone-screen">
+                    <img src="imagens/Estoque.png" alt="Tela Estoque">
+                </div>
+                <div class="phone-button"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <p>&copy; 2025 NilvanApp - Solução de Gestão de Estoque. Todos os direitos reservados.</p>
+</footer>
+
+</body>
+</html>
