@@ -29,6 +29,10 @@ public class SecurityConfiguration {
             "/swagger-ui/**",
             "/swagger-ui.html",
 
+            "/",
+            "/index.html",
+            "/home",
+            "/imagens/**",
             "/api/movimentacao_estoque/criar",
             "/api/movimentacao_estoque/listar",
             "/api/movimentacao_estoque/listar/{id}",
